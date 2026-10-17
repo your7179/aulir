@@ -157,6 +157,50 @@
     비겁: "친구·동료", 식상: "재능·표현", 재성: "재물·결실", 관성: "책임·명예", 인성: "배움·도움"
   };
 
+  /* 원하는 날의 운세: 목적별 조언 */
+  const PURPOSE = {
+    exam: {
+      label: "📝 시험",
+      비겁: "평소 실력을 믿고 자신 있게 임하세요. 함께 공부한 사람과 마지막 점검을 하면 도움이 됩니다.",
+      식상: "생각이 잘 풀리는 날이라 쓰고 말하는 시험에 강합니다. 실수하지 않도록 답을 한 번 더 확인하세요.",
+      재성: "꼼꼼함이 빛나는 날입니다. 시간 배분만 잘 하면 아는 문제를 놓치지 않습니다.",
+      관성: "조금 긴장되기 쉬운 날이지만 규칙을 지키는 힘이 강합니다. 시험장에 일찍 도착해 숨을 고르세요.",
+      인성: "배운 것이 잘 떠오르는 날입니다. 공부와 시험에 잘 맞는 기운이니, 전날 푹 자는 것이 가장 좋은 준비입니다."
+    },
+    interview: {
+      label: "🤝 면접",
+      비겁: "자신감 있는 태도가 장점입니다. 상대의 말을 끝까지 듣고 답하면 더 좋은 인상을 줍니다.",
+      식상: "말솜씨가 살아나는 날입니다. 준비한 이야기를 편하게 풀어 보세요.",
+      재성: "해 온 일과 성과를 구체적으로 말하면 좋은 인상을 남깁니다.",
+      관성: "단정한 차림과 예의가 큰 점수가 됩니다. 믿음직한 모습이 돋보입니다.",
+      인성: "차분하고 성실한 인상을 줍니다. 배우려는 자세를 보여 주세요."
+    },
+    contract: {
+      label: "📑 이사·계약",
+      비겁: "함께 일을 나눌 사람이 있으면 수월합니다. 돈 문제는 미리 정확히 정해 두세요.",
+      식상: "새 출발의 설렘이 있는 날입니다. 조건은 말로만 정하지 말고 꼭 글로 남기세요.",
+      재성: "실속을 따지기 좋은 날입니다. 금액과 날짜를 꼼꼼히 확인하면 손해가 없습니다.",
+      관성: "서류와 절차를 잘 챙기면 순조롭습니다. 도장 찍기 전에 한 번 더 읽어 보세요.",
+      인성: "문서 운이 좋은 날입니다. 믿을 만한 사람의 조언을 들으면 더욱 좋습니다."
+    },
+    trip: {
+      label: "🧳 여행·나들이",
+      비겁: "친구나 가족과 함께하면 즐거움이 두 배가 됩니다.",
+      식상: "맛있는 음식과 볼거리가 기다리는 날입니다. 사진을 많이 남기세요.",
+      재성: "알뜰하게 계획하면 만족스러운 나들이가 됩니다. 지갑과 소지품을 잘 챙기세요.",
+      관성: "일정을 넉넉하게 잡으면 마음 편한 여행이 됩니다. 교통 시간을 미리 확인하세요.",
+      인성: "조용한 곳에서 쉬어 가기 좋은 날입니다. 절이나 숲길 산책도 좋습니다."
+    },
+    meet: {
+      label: "💐 만남·모임",
+      비겁: "편안하고 솔직한 대화가 오가는 날입니다.",
+      식상: "웃음이 많은 자리가 됩니다. 재치 있는 말이 호감을 삽니다.",
+      재성: "작은 선물이나 배려가 좋은 인상을 남깁니다.",
+      관성: "약속 시간을 잘 지키면 믿음을 얻습니다. 예의를 갖추면 좋은 인연이 됩니다.",
+      인성: "어른이나 스승을 뵙기 좋은 날입니다. 따뜻한 조언을 듣게 됩니다."
+    }
+  };
+
   const REL_NOTE = {
     hap: "타고난 일지(태어난 날의 지지)와 잘 어울리는 기운이라, 사람 사이의 일이 순조롭습니다.",
     chung: "타고난 일지와 부딪히는 기운이 있어 변화가 생기기 쉽습니다. 서두르지 말고 한 번 더 확인하면 오히려 좋은 기회가 됩니다.",
@@ -378,7 +422,7 @@
     let score = FORTUNE[group].base;
     if (rel === "hap") score++;
     if (rel === "chung") score--;
-    const fills = weakEls.includes(STEM_EL[s]) || weakEls.includes(BR_EL[b]);
+    const fills = weakEls.includes(STEM_EL[s]);   // 그날 천간이 부족한 오행일 때
     if (fills) score++;
     score = Math.max(2, Math.min(5, score));
     return { god, group, rel, fills, score };
@@ -429,7 +473,7 @@
     /* 바로가기 */
     const nav = el("nav", "saju-nav");
     nav.setAttribute("aria-label", "결과 바로가기");
-    [["s-chart", "사주표"], ["s-five", "오행"], ["s-luck", "운세"], ["s-daeun", "대운"], ["s-star", "별자리"]]
+    [["s-chart", "사주표"], ["s-five", "오행"], ["s-luck", "운세"], ["s-pick", "날짜 운세"], ["s-daeun", "대운"], ["s-star", "별자리"]]
       .forEach(([id, t]) => {
         const a = el("a", null, t);
         a.href = "#" + id;
@@ -576,6 +620,9 @@
     sLuck.appendChild(yearCard);
     card.appendChild(sLuck);
 
+    /* ── 원하는 날의 운세 ── */
+    card.appendChild(pickSection(dm, dayBranch, weakEls, todayStart));
+
     /* ── 대운 ── */
     const sDaeun = section("s-daeun", "🧭 대운 — 10년마다 바뀌는 큰 흐름");
     try {
@@ -671,6 +718,113 @@
   function groups(count, max, fallback) {
     const tied = Object.keys(count).filter((g) => count[g] === max);
     return tied.includes(fallback) ? fallback : tied[0];
+  }
+
+  function ymd(d) {
+    const p = (n) => String(n).padStart(2, "0");
+    return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}`;
+  }
+
+  function pickSection(dm, dayBranch, weakEls, todayStart) {
+    const sec = section("s-pick", "📅 원하는 날의 운세");
+    sec.appendChild(el("p", null, "시험, 면접, 이사, 여행처럼 앞으로 다가올 날의 운세가 궁금하신가요? 날짜를 고르고 [이 날 운세 보기]를 누르세요."));
+
+    const addDays = (n) => new Date(todayStart.getFullYear(), todayStart.getMonth(), todayStart.getDate() + n);
+    const box = el("div", "pick-box tool");
+
+    const dl = el("label", null, "날짜 고르기");
+    dl.htmlFor = "pickDate";
+    box.appendChild(dl);
+    const date = el("input");
+    date.type = "date";
+    date.id = "pickDate";
+    date.min = ymd(todayStart);
+    date.max = ymd(addDays(730));
+    date.value = ymd(addDays(7));
+    box.appendChild(date);
+
+    box.appendChild(el("span", "field-title", "무슨 날인가요? (선택)"));
+    const chips = el("div", "chip-row");
+    chips.setAttribute("role", "group");
+    chips.setAttribute("aria-label", "날의 목적");
+    let purpose = "";
+    [["", "📆 그냥 궁금해요"]].concat(Object.keys(PURPOSE).map((k) => [k, PURPOSE[k].label]))
+      .forEach(([k, label]) => {
+        const b = el("button", null, label);
+        b.type = "button";
+        b.setAttribute("aria-pressed", String(k === ""));
+        b.addEventListener("click", () => {
+          purpose = k;
+          chips.querySelectorAll("button").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+        });
+        chips.appendChild(b);
+      });
+    box.appendChild(chips);
+
+    const go = el("button", "btn btn-primary btn-full", "🔍 이 날 운세 보기");
+    go.type = "button";
+    box.appendChild(go);
+    sec.appendChild(box);
+
+    const out = el("div", "pick-out");
+    out.setAttribute("aria-live", "polite");
+    sec.appendChild(out);
+
+    go.addEventListener("click", () => {
+      out.replaceChildren();
+      const v = date.value;
+      const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(v);
+      if (!m) {
+        out.appendChild(el("p", "error", "날짜를 골라 주세요."));
+        return;
+      }
+      const dt = new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]));
+      if (dt < todayStart) {
+        out.appendChild(el("p", "error", "오늘이나 앞으로 다가올 날짜를 골라 주세요."));
+        return;
+      }
+      const gz = dayGz(dt);
+      const f = periodFortune(dm, dayBranch, weakEls, gz.s, gz.b);
+      const dday = Math.round((dt - todayStart) / 86400000);
+      const variant = hash(`${dt.toDateString()}-${dm}-${dayBranch}`) % 2;
+      const title = (purpose ? PURPOSE[purpose].label.replace(/^\S+\s/, "") + " 날의 운세" : "그날의 운세") +
+        (dday === 0 ? " (오늘)" : ` (D-${dday})`);
+      const c = luckCard(title, `${fmtDate(dt)} · ${gzFull(gz.s, gz.b)}일`,
+        f, FORTUNE[f.group].today[variant], !purpose, weakEls);
+      if (purpose) {
+        c.appendChild(el("p", "good-days", `${PURPOSE[purpose].label} 이렇게 준비하세요: ${PURPOSE[purpose][f.group]}`));
+      }
+      out.appendChild(c);
+      c.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    });
+
+    // 앞으로 30일 가운데 기운이 좋은 날
+    const list = [];
+    for (let i = 1; i <= 30; i++) {
+      const dt = addDays(i);
+      const gz = dayGz(dt);
+      list.push({ dt, gz, f: periodFortune(dm, dayBranch, weakEls, gz.s, gz.b) });
+    }
+    const top = list.filter((x) => x.f.score >= 4)
+      .sort((a, b) => b.f.score - a.f.score || a.dt - b.dt).slice(0, 4)
+      .sort((a, b) => a.dt - b.dt);
+    if (top.length) {
+      const g = el("div", "good-list");
+      g.appendChild(el("h4", null, "✨ 앞으로 30일 가운데 기운이 좋은 날"));
+      const ul = el("ul");
+      top.forEach((x) => {
+        const li = el("li");
+        const b = el("button", "link-btn", `${fmtDate(x.dt)} · ${gzKo(x.gz.s, x.gz.b)}일 ${"★".repeat(x.f.score)}`);
+        b.type = "button";
+        b.addEventListener("click", () => { date.value = ymd(x.dt); go.click(); });
+        li.appendChild(b);
+        ul.appendChild(li);
+      });
+      g.appendChild(ul);
+      g.appendChild(el("p", "help", "날짜를 누르면 그날의 자세한 운세를 볼 수 있습니다. 중요한 날을 정할 때 재미로 참고해 보세요."));
+      sec.appendChild(g);
+    }
+    return sec;
   }
 
   const DAEUN_TEXT = {

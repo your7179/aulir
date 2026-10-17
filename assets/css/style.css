@@ -705,3 +705,58 @@ h3 { font-size: 20px; margin: 30px 0 10px; }
   .saju-sec { padding: 16px 10px; }
   .luck-card { padding: 12px 12px 4px; }
 }
+
+/* ── 원하는 날의 운세 ─────────────────────── */
+.pick-box {
+  background: var(--green-mist);
+  border-radius: 14px;
+  padding: 4px 14px 16px;
+}
+.pick-box .btn-primary { margin-top: 18px; }
+.chip-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+@media (min-width: 560px) { .chip-row { grid-template-columns: repeat(3, 1fr); } }
+.chip-row button {
+  min-height: 50px;
+  padding: 6px 8px;
+  font: inherit;
+  font-size: 16px;
+  font-weight: 700;
+  border-radius: 10px;
+  background: #fff;
+  color: #42614a;
+  border: 1px solid var(--line);
+  cursor: pointer;
+}
+.chip-row button[aria-pressed="true"] {
+  background: var(--green);
+  color: #fff;
+  border-color: var(--green);
+}
+.pick-out { scroll-margin-top: 16px; }
+.good-list {
+  margin-top: 16px;
+  background: #fdf6e3;
+  border-radius: 12px;
+  padding: 14px 14px 6px;
+}
+.good-list ul { list-style: none; padding: 0; margin: 8px 0; }
+.good-list li { margin-bottom: 6px; }
+.link-btn {
+  width: 100%;
+  min-height: 48px;
+  text-align: left;
+  font: inherit;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--green-deep);
+  background: #fff;
+  border: 1px solid #ecdcae;
+  border-radius: 10px;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+.link-btn:hover { background: #fffaf0; }
