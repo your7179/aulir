@@ -21,7 +21,7 @@ email: "naul2@naver.com"
 
 # ▼ 게시판 주소 (닷홈 shinbook.dothome.co.kr 워드프레스의 케이보드)
 #   게시판 페이지를 만든 뒤, 그 페이지 주소(?page_id=숫자)로 바꿔 넣습니다.
-board_url: "https://shinbook.dothome.co.kr/"
+board_url: "https://shinbook.dothome.co.kr/?page_id=17"
 
 # ▼ 지킬 설정 (건드리지 않아도 됩니다)
 markdown: kramdown
