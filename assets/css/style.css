@@ -855,3 +855,75 @@ h3 { font-size: 20px; margin: 30px 0 10px; }
 
 .post-list { padding-left: 1.2em; margin: 0; }
 .post-list li { margin-bottom: 8px; }
+
+/* ── 불교이야기 글 목록 (가로 2 × 세로 3) ─────── */
+.post-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  margin: 28px 0 10px;
+  scroll-margin-top: 16px;
+}
+@media (min-width: 640px) {
+  .post-grid { grid-template-columns: 1fr 1fr; gap: 24px; scroll-margin-top: 90px; }
+}
+.post-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 190px;
+  background: #fff;
+  border: 1px solid #e3dccb;
+  border-top: 3px solid #a8862a;
+  padding: 26px 26px 24px;
+  text-decoration: none;
+  color: var(--ink);
+  transition: box-shadow .15s, transform .15s;
+}
+.post-card:hover {
+  color: var(--ink);
+  box-shadow: 0 8px 24px rgba(90, 74, 28, 0.12);
+  transform: translateY(-2px);
+}
+.post-card[hidden] { display: none; }
+.pc-date { color: #a8862a; font-weight: 700; font-size: 16px; }
+.pc-title {
+  font-size: 21px;
+  font-weight: 800;
+  line-height: 1.5;
+  color: #2b2a24;
+  font-family: "Noto Serif KR", "Nanum Myeongjo", "Batang", serif;
+}
+.pc-desc { color: #5d5a50; font-size: 17px; line-height: 1.7; }
+
+.pager {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin: 26px 0 10px;
+}
+.pager button {
+  min-width: 48px;
+  min-height: 48px;
+  padding: 0 10px;
+  font: inherit;
+  font-size: 18px;
+  font-weight: 700;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--green-deep);
+  cursor: pointer;
+}
+.pager button.is-current { background: var(--green); border-color: var(--green); color: #fff; }
+.pager button:disabled { opacity: .35; cursor: default; }
+
+.topic {
+  display: inline-block;
+  background: #f6efdc;
+  color: #7a6220;
+  border-radius: 999px;
+  padding: 0 10px;
+  font-weight: 700;
+}

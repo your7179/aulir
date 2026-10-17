@@ -1,17 +1,42 @@
 ---
 layout: default
 title: "불교이야기"
-description: "불교 기초, 경전 이야기, 염불과 기도 체험, 절기와 법회를 쉬운 말로 전합니다."
+seo_title: "불교이야기, 쉽게 읽는 부처님 말씀과 염불 이야기"
+description: "불교 기초, 경전 이야기, 염불과 기도 체험, 절기와 법회 이야기를 쉬운 말로 전합니다. 염불 체험 나눔 게시판에서 가피 이야기도 함께 나눠 주세요."
 section: buddha
 icon: "🪷"
-intro: "부처님 가르침과 염불·기도 이야기를 쉬운 말로 전합니다."
-noindex: true
-noads: true
+intro: "부처님 가르침과 염불·기도 이야기를 쉬운 말로 전합니다. 바쁜 하루 가운데 잠시 마음을 쉬어 가세요."
+per_page: 6
+scripts:
+  - "/assets/js/paginate.js"
 ---
 
+{%- assign posts = site.categories.buddha %}
+
+{%- if posts and posts.size > 0 %}
+<div class="post-grid" id="postGrid" data-per-page="{{ page.per_page }}">
+  {%- for p in posts %}
+  <a class="post-card" href="{{ p.url | relative_url }}">
+    <span class="pc-date">
+      {{ p.date | date: "%Y.%m.%d" }}{% if p.topic %} · {{ p.topic }}{% endif %}
+    </span>
+    <span class="pc-title">{{ p.title }}</span>
+    <span class="pc-desc">{{ p.description | default: p.excerpt | strip_html | strip_newlines | truncate: 70 }}</span>
+  </a>
+  {%- endfor %}
+</div>
+<nav class="pager" id="pager" aria-label="쪽 번호"></nav>
+{%- else %}
 <section class="card" style="text-align:center">
-  <h2>🌱 지금 준비하고 있습니다</h2>
-  <p>곧 알찬 내용으로 찾아뵙겠습니다. 그동안 다른 메뉴를 둘러보세요.</p>
-  <p><a class="btn btn-primary" href="{{ '/lotto/' | relative_url }}">🍀 로또번호 만들기</a></p>
-  <p><a class="btn btn-line" href="{{ '/' | relative_url }}">🏠 처음으로</a></p>
+  <h2>🌱 첫 이야기를 준비하고 있습니다</h2>
+  <p>곧 부처님 말씀과 염불 이야기로 찾아뵙겠습니다.</p>
 </section>
+{%- endif %}
+
+<a class="board-banner" href="{{ site.board_url }}">
+  <span class="bb-icon" aria-hidden="true">📿</span>
+  <span>
+    <strong>염불 체험 나눔 게시판</strong>
+    염불과 기도에서 얻은 가피와 마음 이야기를 함께 나눠 주세요.
+  </span>
+</a>

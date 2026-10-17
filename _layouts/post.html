@@ -4,6 +4,7 @@ layout: default
 {%- assign cat = page.category %}
 <article class="article">
   <p class="meta">
+    {%- if page.topic %}<span class="topic">{{ page.topic }}</span> · {% endif %}
     <time datetime="{{ page.date | date: '%Y-%m-%d' }}">{{ page.date | date: "%Y년 %-m월 %-d일" }}</time>
   </p>
 
@@ -13,6 +14,16 @@ layout: default
 
   {{ content }}
 </article>
+
+{%- if cat == "buddha" %}
+<a class="board-banner" href="{{ site.board_url }}">
+  <span class="bb-icon" aria-hidden="true">📿</span>
+  <span>
+    <strong>염불 체험 나눔 게시판</strong>
+    염불과 기도에서 얻은 가피와 마음 이야기를 함께 나눠 주세요.
+  </span>
+</a>
+{%- endif %}
 
 <nav class="back-links" aria-label="이어서 보기">
   {%- case cat %}
