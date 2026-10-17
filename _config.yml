@@ -20,7 +20,7 @@ author: "신광태"
 email: "naul2@naver.com"
 
 # ▼ 게시판 주소 (카페24 워드프레스+케이보드, 준비되면 실제 주소로 바꿉니다)
-board_url: "https://board.aulir.com/"
+board_url: "https://shinbook.dothome.co.kr/?page_id=88"
 
 # ▼ 지킬 설정 (건드리지 않아도 됩니다)
 markdown: kramdown
