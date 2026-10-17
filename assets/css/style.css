@@ -760,3 +760,98 @@ h3 { font-size: 20px; margin: 30px 0 10px; }
   cursor: pointer;
 }
 .link-btn:hover { background: #fffaf0; }
+
+/* ── 꿈해몽 ───────────────────────────────── */
+.tool textarea {
+  width: 100%;
+  min-height: 110px;
+  padding: 12px;
+  font: inherit;
+  font-size: 18px;
+  line-height: 1.6;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fff;
+  color: var(--ink);
+  resize: vertical;
+}
+.tool form .btn-primary { margin-top: 16px; }
+.dream-chips { margin-top: 4px; }
+
+.dream-result { text-align: left; }
+.dream-result h2 { text-align: center; margin: 0 0 6px; }
+.dream-quote {
+  text-align: center;
+  color: var(--muted);
+  font-size: 17px;
+  margin: 0 0 12px;
+}
+.dream-tags { font-size: 16px; color: var(--muted); }
+.tag {
+  display: inline-block;
+  background: var(--green);
+  color: #fff;
+  border-radius: 999px;
+  padding: 2px 12px;
+  margin: 2px 4px 2px 0;
+  font-weight: 700;
+  font-size: 15px;
+}
+.dream-hit {
+  background: #fff;
+  border-radius: 14px;
+  padding: 14px 16px 4px;
+  margin-top: 12px;
+}
+.dream-hit h3 { margin: 0 0 6px; font-size: 20px; }
+.dream-hit p { margin: 0 0 10px; }
+.dream-act {
+  background: #fdf6e3;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-weight: 600;
+}
+.dream-links { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; }
+.dream-links .btn { min-height: 48px; font-size: 16px; padding: 8px 14px; }
+.more-link { font-weight: 700; }
+.dream-result > .notice { margin-top: 16px; }
+
+.cat-nav {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  margin: 26px 0 8px;
+}
+@media (min-width: 560px) { .cat-nav { grid-template-columns: repeat(4, 1fr); } }
+.cat-nav a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 50px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  text-decoration: none;
+  font-weight: 700;
+  color: var(--green-deep);
+}
+
+.dream-cat { scroll-margin-top: 16px; }
+@media (min-width: 640px) { .dream-cat, .dream-item { scroll-margin-top: 90px; } }
+.dream-cat > h2 { margin-top: 40px; }
+.dream-item {
+  background: #fff;
+  border-radius: 16px;
+  padding: 18px 18px 8px;
+  margin: 12px 0;
+  box-shadow: 0 4px 16px rgba(37, 75, 37, 0.06);
+  scroll-margin-top: 16px;
+}
+.dream-item h3 { margin: 0 0 6px; font-size: 20px; }
+.dream-item p { margin: 0 0 10px; }
+.dream-item ul { margin: 0 0 10px; padding-left: 1.2em; }
+.dream-item li { margin-bottom: 4px; }
+.dream-item:target { box-shadow: 0 0 0 3px var(--gold); }
+
+.post-list { padding-left: 1.2em; margin: 0; }
+.post-list li { margin-bottom: 8px; }
