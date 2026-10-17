@@ -7,9 +7,9 @@
 #   baseurl: "/aulir"  →  baseurl: ""
 #   url: "https://shinbook.kr"  →  url: "https://aulir.com"
 #   ads: false         →  ads: true
-baseurl: "/aulir"
-url: "https://shinbook.kr"
-ads: false
+baseurl: ""
+url: "https://aulir.com"
+ads: true
 
 # ▼ 사이트 기본 정보
 title: "운세쉼터"
