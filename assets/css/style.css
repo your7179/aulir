@@ -122,7 +122,7 @@ a:hover { color: var(--green-dark); }
     z-index: 5;
     backdrop-filter: blur(6px);
   }
-  .lotto-tool #result { scroll-margin-top: 90px; }
+  .tool #result { scroll-margin-top: 90px; }
   .site-head-in {
     display: flex;
     align-items: center;
@@ -309,17 +309,17 @@ h3 { font-size: 20px; margin: 30px 0 10px; }
 .board-banner strong { display: block; color: #4a3b10; font-size: 19px; }
 
 /* ── 로또 도구 ────────────────────────────── */
-.lotto-tool label,
-.lotto-tool .field-title {
+.tool label,
+.tool .field-title {
   display: block;
   margin: 20px 0 8px;
   font-weight: 700;
   font-size: 18px;
 }
-.lotto-tool .opt { color: var(--muted); font-weight: 400; font-size: 16px; }
+.tool .opt { color: var(--muted); font-weight: 400; font-size: 16px; }
 
-.lotto-tool input,
-.lotto-tool select {
+.tool input,
+.tool select {
   width: 100%;
   min-height: 54px;
   padding: 10px 12px;
@@ -369,7 +369,7 @@ h3 { font-size: 20px; margin: 30px 0 10px; }
   font-weight: 700;
   cursor: pointer;
 }
-.lotto-tool .check-row input {
+.tool .check-row input {
   width: 26px;
   min-height: 26px;
   height: 26px;
@@ -381,7 +381,7 @@ h3 { font-size: 20px; margin: 30px 0 10px; }
 
 .hidden { display: none !important; }
 
-.lotto-tool .btn-primary { margin-top: 28px; }
+.tool .btn-primary { margin-top: 28px; }
 
 #result { margin-top: 26px; scroll-margin-top: 16px; }
 
@@ -508,3 +508,200 @@ h3 { font-size: 20px; margin: 30px 0 10px; }
 }
 .foot-note { line-height: 1.7; margin: 12px 0 6px; }
 .foot-copy { margin: 0; }
+
+/* ── 사주보기 ─────────────────────────────── */
+.result-anchor { scroll-margin-top: 16px; }
+@media (min-width: 640px) { .tool .result-anchor { scroll-margin-top: 90px; } }
+
+.saju-result { text-align: left; padding: 22px 14px; }
+@media (min-width: 640px) { .saju-result { padding: 28px 26px; } }
+
+.saju-summary { text-align: center; }
+.saju-summary h2 { margin: 0 0 6px; }
+
+.saju-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin: 16px 0 6px;
+}
+.saju-nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: #fff;
+  border: 1px solid var(--line);
+  color: var(--green-deep);
+  font-size: 16px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.saju-sec {
+  background: #fff;
+  border-radius: 16px;
+  padding: 18px 14px;
+  margin-top: 16px;
+  scroll-margin-top: 16px;
+}
+@media (min-width: 640px) { .saju-sec { padding: 22px 22px; scroll-margin-top: 90px; } }
+.saju-sec h3 { margin: 0 0 12px; font-size: 21px; }
+.saju-sec h4 { margin: 0 0 6px; font-size: 18px; color: var(--green-deep); line-height: 1.5; }
+.saju-sec p { margin: 0 0 10px; }
+
+/* 사주표 */
+.pillars {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  text-align: center;
+}
+.pillar {
+  background: var(--green-mist);
+  border-radius: 12px;
+  padding: 8px 4px;
+}
+.pillar.is-me { background: #fdf3d6; box-shadow: inset 0 0 0 2px var(--gold); }
+.p-name { font-weight: 800; color: var(--green-deep); font-size: 17px; line-height: 1.3; }
+.p-sub { font-size: 13px; color: var(--muted); line-height: 1.3; margin-bottom: 4px; }
+.p-god { font-size: 14px; font-weight: 700; color: #4a5a4e; line-height: 1.4; min-height: 1.4em; }
+
+.gz {
+  border-radius: 10px;
+  margin: 4px 0;
+  padding: 6px 2px 4px;
+  line-height: 1.1;
+}
+.gz b { display: block; font-size: 30px; font-weight: 800; font-family: "Noto Serif KR", "Batang", serif; }
+.gz small { display: block; font-size: 13px; margin-top: 3px; }
+.gz.unknown { background: #eee; color: #999; font-size: 30px; font-weight: 800; padding: 10px 2px; }
+
+.el-wood  { background: #4f9d5d; color: #fff; }
+.el-fire  { background: #e0614a; color: #fff; }
+.el-earth { background: #e8b84a; color: #3d2f0a; }
+.el-metal { background: #c9cdd2; color: #2d3136; }
+.el-water { background: #33506f; color: #fff; }
+
+.me-box {
+  margin-top: 16px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: var(--green-mist);
+  border-left: 5px solid var(--gold);
+}
+.me-box p { margin: 0; }
+
+/* 오행 막대 */
+.five-bars { display: grid; gap: 10px; margin-bottom: 14px; }
+.five-row {
+  display: grid;
+  grid-template-columns: 96px 1fr 42px;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+}
+.five-name { font-weight: 700; }
+.five-track { background: #eef2ec; height: 18px; border-radius: 999px; overflow: hidden; }
+.five-fill { display: block; height: 100%; border-radius: 999px; min-width: 0; }
+.five-num { text-align: right; font-weight: 700; }
+
+.lucky {
+  background: #fdf6e3;
+  border-radius: 12px;
+  padding: 14px 16px;
+}
+.lucky ul { margin: 0; padding-left: 1.2em; }
+
+/* 운세 카드 */
+.luck-card {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 14px 14px 6px;
+  margin-top: 12px;
+}
+.luck-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.luck-top h4 { margin: 0; }
+.stars { color: #e3a21a; font-size: 20px; letter-spacing: 1px; white-space: nowrap; }
+.luck-sub { font-size: 15px; color: var(--muted); margin: 2px 0 8px !important; line-height: 1.5; }
+.luck-note {
+  font-size: 16px;
+  background: var(--green-mist);
+  border-radius: 8px;
+  padding: 8px 12px;
+}
+.luck-areas { list-style: none; padding: 0; margin: 4px 0 10px; }
+.luck-areas li { padding: 6px 0; border-top: 1px dashed var(--line); font-size: 17px; line-height: 1.6; }
+.good-days {
+  font-size: 16px;
+  font-weight: 700;
+  color: #5a4a1c;
+  background: #fdf6e3;
+  border-radius: 8px;
+  padding: 8px 12px;
+  margin-top: 4px !important;
+}
+
+/* 대운 */
+.daeun {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(88px, 1fr));
+  gap: 8px;
+  margin: 10px 0 12px;
+  text-align: center;
+}
+.daeun-item {
+  background: var(--green-mist);
+  border-radius: 12px;
+  padding: 10px 4px;
+  line-height: 1.4;
+}
+.daeun-item.now { background: var(--green); color: #fff; }
+.daeun-item.now .dy-hj, .daeun-item.now .dy-year, .daeun-item.now .dy-age { color: #e6f3e8; }
+.dy-age { font-size: 14px; color: var(--muted); }
+.dy-gz { font-size: 20px; font-weight: 800; }
+.dy-hj { font-size: 15px; color: var(--muted); }
+.dy-god { font-size: 14px; font-weight: 700; }
+.dy-year { font-size: 13px; color: var(--muted); }
+
+/* 별자리 */
+.star-head { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+.star-sym {
+  width: 54px; height: 54px;
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: 50%;
+  background: #33506f; color: #fff;
+  font-size: 30px;
+}
+.star-head strong { font-size: 20px; color: var(--green-deep); }
+
+.saju-result > .notice { margin: 18px 0 0; }
+
+@media (max-width: 380px) {
+  .gz b { font-size: 24px; }
+  .five-row { grid-template-columns: 82px 1fr 36px; font-size: 15px; }
+}
+
+/* 휴대폰에서 사주 결과를 넓게 */
+@media (max-width: 480px) {
+  .card.tool { padding: 20px 12px; }
+  .saju-result { padding: 16px 6px; }
+  .saju-sec { padding: 16px 12px; }
+  .saju-nav { gap: 6px; }
+  .saju-nav a { padding: 6px 11px; font-size: 15px; }
+  .p-sub { display: none; }
+  .pillars { gap: 4px; }
+  .me-box { padding: 12px; }
+}
+@media (max-width: 480px) {
+  .saju-sec { padding: 16px 10px; }
+  .luck-card { padding: 12px 12px 4px; }
+}

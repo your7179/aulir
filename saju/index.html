@@ -1,17 +1,187 @@
 ---
 layout: default
 title: "사주보기"
-description: "태어난 날과 시로 사주팔자를 알아봅니다. 재미와 참고를 위한 내용입니다."
+seo_title: "무료 사주보기, 오늘의 운세와 별자리 운세"
+description: "생년월일과 태어난 시로 사주팔자를 무료로 풀어 드립니다. 오행 분포, 대운, 오늘·이번 주·이달·올해의 운세와 별자리 운세까지 한 번에 볼 수 있습니다. 재미와 참고를 위한 내용입니다."
 section: saju
 icon: "🔮"
-intro: "태어난 해·달·날·시로 나의 사주팔자를 알아봅니다. 재미와 참고를 위한 내용입니다."
-noindex: true
-noads: true
+intro: "태어난 해·달·날·시로 나의 사주팔자를 알아보고, 오늘부터 올해까지의 운세와 별자리 운세도 함께 보세요. 재미와 참고를 위한 내용입니다."
+scripts:
+  - "https://cdn.jsdelivr.net/npm/lunar-javascript@1.7.7/lunar.js"
+  - "/assets/js/saju.js"
 ---
 
-<section class="card" style="text-align:center">
-  <h2>🌱 지금 준비하고 있습니다</h2>
-  <p>곧 알찬 내용으로 찾아뵙겠습니다. 그동안 다른 메뉴를 둘러보세요.</p>
-  <p><a class="btn btn-primary" href="{{ '/lotto/' | relative_url }}">🍀 로또번호 만들기</a></p>
-  <p><a class="btn btn-line" href="{{ '/' | relative_url }}">🏠 처음으로</a></p>
+<section class="card">
+  <h2>이렇게 보세요</h2>
+  <ol>
+    <li>양력인지 음력인지 고르고, 생년월일을 넣습니다.</li>
+    <li>태어난 시를 고릅니다. 모르시면 <strong>'모름'</strong>을 고르셔도 됩니다.</li>
+    <li>남성·여성을 고릅니다. (10년 단위 큰 흐름인 '대운'을 계산할 때 씁니다.)</li>
+    <li>초록색 <strong>[사주 보기]</strong> 단추를 누르면 결과가 아래에 나옵니다.</li>
+  </ol>
+  <p class="help">입력하신 내용은 이 화면 안에서만 계산하며, 어디에도 저장하거나 보내지 않습니다.</p>
 </section>
+
+<section class="card tool" id="sajuTool" aria-labelledby="sajuToolTitle">
+  <h2 id="sajuToolTitle">🔮 사주 보기</h2>
+
+  <form id="sajuForm" novalidate>
+    <span class="field-title">생년월일 종류</span>
+    <div class="choice-row" role="group" aria-label="양력 음력 선택">
+      <button type="button" id="solarBtn" aria-pressed="true">양력</button>
+      <button type="button" id="lunarBtn" aria-pressed="false">음력</button>
+    </div>
+
+    <div id="leapWrap" class="hidden">
+      <label for="leap">윤달 여부</label>
+      <select id="leap">
+        <option value="false">평달</option>
+        <option value="true">윤달</option>
+      </select>
+    </div>
+
+    <span class="field-title">생년월일</span>
+    <div class="date-row">
+      <input id="year" type="number" inputmode="numeric" min="1900" max="2050"
+             placeholder="연도" aria-label="태어난 해">
+      <input id="month" type="number" inputmode="numeric" min="1" max="12"
+             placeholder="월" aria-label="태어난 달">
+      <input id="day" type="number" inputmode="numeric" min="1" max="31"
+             placeholder="일" aria-label="태어난 날">
+    </div>
+
+    <label for="hour">태어난 시</label>
+    <select id="hour">
+      <option value="">모름</option>
+      <option value="0">자시 · 밤 11:30 ~ 새벽 1:29</option>
+      <option value="1">축시 · 새벽 1:30 ~ 3:29</option>
+      <option value="2">인시 · 새벽 3:30 ~ 5:29</option>
+      <option value="3">묘시 · 아침 5:30 ~ 7:29</option>
+      <option value="4">진시 · 아침 7:30 ~ 9:29</option>
+      <option value="5">사시 · 오전 9:30 ~ 11:29</option>
+      <option value="6">오시 · 낮 11:30 ~ 1:29</option>
+      <option value="7">미시 · 낮 1:30 ~ 3:29</option>
+      <option value="8">신시 · 오후 3:30 ~ 5:29</option>
+      <option value="9">유시 · 저녁 5:30 ~ 7:29</option>
+      <option value="10">술시 · 저녁 7:30 ~ 9:29</option>
+      <option value="11">해시 · 밤 9:30 ~ 11:29</option>
+    </select>
+    <p class="help">밤 11시 30분~12시 사이에 태어나셨다면 다음 날 날짜로 넣고 자시를 고르세요.</p>
+
+    <span class="field-title">성별</span>
+    <div class="choice-row" role="group" aria-label="성별 선택">
+      <button type="button" id="maleBtn" aria-pressed="true">남성</button>
+      <button type="button" id="femaleBtn" aria-pressed="false">여성</button>
+    </div>
+
+    <button class="btn btn-primary btn-full" type="submit">🔮 사주 보기</button>
+  </form>
+
+  <div id="sajuResult" class="result-anchor" aria-live="polite"></div>
+</section>
+
+<p class="notice">
+  사주와 별자리 운세는 <strong>재미와 참고를 위한 내용</strong>입니다.
+  건강·돈·사람에 관한 중요한 결정은 스스로의 판단과 전문가의 조언을 따라 주세요.
+</p>
+
+<article class="article">
+  <h2>사주팔자란 무엇일까요?</h2>
+  <p>
+    '사주(四柱)'는 네 개의 기둥이라는 뜻입니다. 태어난 <strong>해·달·날·시</strong>를 각각 하나의 기둥으로 봅니다.
+    기둥마다 글자가 두 개씩 있어서 모두 여덟 글자가 되는데, 이것을 '팔자(八字)'라고 부릅니다.
+    "팔자가 좋다"는 말이 바로 여기서 나왔습니다.
+  </p>
+  <p>
+    여덟 글자는 옛 달력에서 해와 날을 세던 이름표입니다. 위 칸에 오는 글자를 <strong>천간</strong>(하늘의 기운),
+    아래 칸에 오는 글자를 <strong>지지</strong>(땅의 기운)라고 합니다. 천간은 갑·을·병·정·무·기·경·신·임·계의 열 글자,
+    지지는 자·축·인·묘·진·사·오·미·신·유·술·해의 열두 글자입니다. 지지 열두 글자가 바로 우리가 잘 아는 열두 띠입니다.
+  </p>
+  <p>
+    천간과 지지를 하나씩 짝지으면 갑자, 을축, 병인… 하는 식으로 60가지가 나옵니다.
+    예순 살을 '환갑(還甲)'이라고 하는 것도, 60년이 지나면 태어난 해의 이름이 다시 돌아오기 때문입니다.
+  </p>
+
+  {% include ad-saju-article.html %}
+
+  <h3>오행 — 나무, 불, 흙, 쇠, 물</h3>
+  <p>
+    여덟 글자는 저마다 다섯 가지 기운, 곧 <strong>오행</strong> 가운데 하나에 속합니다.
+    나무(목)는 자라나는 힘, 불(화)은 뜨거운 열정, 흙(토)은 든든한 믿음, 쇠(금)는 맺고 끊는 결단, 물(수)은 깊은 지혜를 나타냅니다.
+  </p>
+  <p>
+    오행은 서로 돕기도 하고 견제하기도 합니다. 나무는 불을 살리고, 불은 재가 되어 흙을 만들고, 흙 속에서 쇠가 나고,
+    쇠에 물방울이 맺히고, 물은 다시 나무를 키웁니다. 이렇게 돌고 도는 관계를 '상생'이라고 합니다.
+    반대로 나무는 흙을 파고들고, 흙은 물을 막고, 물은 불을 끄고, 불은 쇠를 녹이고, 쇠는 나무를 자르는 관계를 '상극'이라고 합니다.
+  </p>
+  <p>
+    사주풀이에서는 다섯 기운이 얼마나 고르게 있는지를 봅니다. 어느 한쪽이 많으면 그 성질이 강하게 드러나고,
+    적은 기운은 생활 속에서 채워 주면 좋다고 봅니다. 이 페이지의 '도움이 되는 기운'과 행운의 색·방향·숫자는
+    이 생각을 바탕으로 알려 드리는 것입니다.
+  </p>
+
+  <h3>'나'를 나타내는 글자, 일간</h3>
+  <p>
+    여덟 글자 가운데 가장 중요한 글자는 <strong>태어난 날의 위 칸 글자</strong>입니다. 이것을 '일간(日干)'이라 부르며,
+    바로 나 자신을 나타낸다고 봅니다. 일간이 갑목이면 큰 나무, 병화면 하늘의 해, 계수면 비와 이슬에 빗대어 성격을 풀이합니다.
+  </p>
+  <p>
+    나머지 글자들은 일간과 어떤 관계인지에 따라 열 가지 이름(십성)으로 나눕니다. 나와 같은 기운은 친구와 형제,
+    내가 낳는 기운은 재능과 표현, 내가 다스리는 기운은 재물, 나를 다스리는 기운은 명예와 책임,
+    나를 돕는 기운은 배움과 어른의 도움으로 봅니다. 사주표 칸 위아래의 작은 글씨가 바로 이 관계입니다.
+  </p>
+
+  {% include ad-saju-article.html %}
+
+  <h2>운세는 어떻게 풀이하나요?</h2>
+  <p>
+    오늘, 이번 주, 이달, 올해에도 저마다의 천간과 지지가 있습니다. 예를 들어 2026년은 '병오년', 붉은 말의 해입니다.
+    이 페이지는 그때의 기운이 나의 일간과 어떤 관계인지(십성), 그리고 태어난 날의 지지와 잘 어울리는지(합) 부딪히는지(충)를 살펴서 운세를 알려 드립니다.
+  </p>
+  <ul>
+    <li><strong>오늘의 운세</strong>는 오늘의 일진(그날의 간지)으로 봅니다.</li>
+    <li><strong>이번 주 운세</strong>는 월요일부터 일요일까지 7일의 일진을 함께 살피고, 기운이 좋은 날을 골라 드립니다.</li>
+    <li><strong>이달의 운세</strong>는 달력의 1일이 아니라 절기를 기준으로 바뀌는 달의 간지로 봅니다.</li>
+    <li><strong>올해의 운세</strong>는 설날이 아니라 입춘(2월 4일 무렵)을 기준으로 바뀌는 해의 간지로 봅니다.</li>
+  </ul>
+
+  <h3>대운 — 10년마다 바뀌는 큰 흐름</h3>
+  <p>
+    대운은 태어난 달을 출발점으로 10년마다 바뀌는 큰 흐름입니다. 남녀와 태어난 해에 따라 흐름이 앞으로 가기도 하고 거꾸로 가기도 해서,
+    대운을 볼 때는 성별이 필요합니다. 하루하루의 운세가 날씨라면, 대운은 계절과 같다고 생각하시면 쉽습니다.
+  </p>
+
+  <h3>정확하게 보려면 알아 두세요</h3>
+  <ul>
+    <li><strong>띠는 입춘부터 바뀝니다.</strong> 1월이나 2월 초에 태어나신 분은 생각하던 띠와 다르게 나올 수 있습니다. 사주에서는 입춘을 새해의 시작으로 보기 때문입니다.</li>
+    <li><strong>태어난 시는 30분씩 늦춰서 봅니다.</strong> 우리나라 표준시는 실제 해의 움직임보다 약 30분 빠르기 때문에, 이 페이지는 자시를 밤 11시 30분부터로 봅니다.</li>
+    <li><strong>서머타임에 태어나셨다면</strong> 1987년·1988년 여름처럼 시계를 한 시간 앞당겼던 때에 태어나신 분은, 기억하시는 시각에서 1시간을 빼고 시를 고르세요.</li>
+    <li><strong>만세력마다 조금씩 다를 수 있습니다.</strong> 자정 무렵 출생이나 절기가 바뀌는 날 출생은 보는 방법에 따라 결과가 달라지기도 합니다.</li>
+  </ul>
+
+  <h2>별자리 운세도 함께 보세요</h2>
+  <p>
+    별자리는 서양에서 전해 온 풀이로, 태어난 날 해가 어느 별자리 쪽에 있었는지로 정합니다.
+    음력으로 넣으셔도 양력 날짜로 바꿔서 별자리를 찾아 드립니다.
+    열두 별자리는 불·흙·공기·물의 네 원소로 나뉘며, 같은 원소이거나 서로 돕는 원소(불과 공기, 흙과 물)끼리 잘 어울린다고 봅니다.
+  </p>
+  <p>
+    오늘의 별자리 운세는 날마다 바뀌며, 같은 날 같은 별자리라면 누가 보아도 같은 내용이 나옵니다.
+    가벼운 마음으로 하루를 여는 인사처럼 읽어 주세요.
+  </p>
+
+  <h2>자주 묻는 질문</h2>
+  <h3>태어난 시를 모르는데 볼 수 있나요?</h3>
+  <p>
+    네. '모름'을 고르시면 시주를 빼고 여섯 글자로 풀이합니다. 일간과 띠, 오늘·올해의 운세는 그대로 보실 수 있습니다.
+  </p>
+  <h3>입력한 정보가 남지 않나요?</h3>
+  <p>
+    모든 계산은 보고 계신 휴대폰이나 컴퓨터 안에서만 이루어집니다. 사이트에 저장하거나 다른 곳으로 보내지 않으며, 화면을 닫으면 사라집니다.
+  </p>
+  <h3>결과가 좋지 않게 나오면 어떻게 하나요?</h3>
+  <p>
+    사주에는 좋고 나쁨이 따로 정해져 있지 않습니다. 강한 기운은 장점이 되기도 하고, 적은 기운은 채워 갈 숙제가 되기도 합니다.
+    운세는 재미와 참고로만 보시고, 조심하라는 말은 한 번 더 살피는 계기로 삼아 주세요.
+  </p>
+</article>
