@@ -1,0 +1,21 @@
+---
+layout: null
+permalink: /sitemap.xml
+---
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+{%- for p in site.pages %}
+  {%- unless p.noindex or p.layout == null or p.url contains ".xml" or p.url contains ".txt" or p.url contains ".json" or p.url contains "/assets/" %}
+  <url>
+    <loc>{{ p.url | absolute_url }}</loc>
+    {%- if p.last_modified_at %}<lastmod>{{ p.last_modified_at | date_to_xmlschema }}</lastmod>{% endif %}
+  </url>
+  {%- endunless %}
+{%- endfor %}
+{%- for post in site.posts %}
+  <url>
+    <loc>{{ post.url | absolute_url }}</loc>
+    <lastmod>{{ post.last_modified_at | default: post.date | date_to_xmlschema }}</lastmod>
+  </url>
+{%- endfor %}
+</urlset>

@@ -1,0 +1,25 @@
+---
+layout: default
+---
+{%- assign cat = page.category %}
+<article class="article">
+  <p class="meta">
+    <time datetime="{{ page.date | date: '%Y-%m-%d' }}">{{ page.date | date: "%Y년 %-m월 %-d일" }}</time>
+  </p>
+
+  {%- if cat == "saju" or cat == "dream" %}
+  <p class="notice">이 글은 재미와 참고를 위한 내용입니다. 중요한 결정은 스스로의 판단과 전문가의 조언을 따르세요.</p>
+  {%- endif %}
+
+  {{ content }}
+</article>
+
+<nav class="back-links" aria-label="이어서 보기">
+  {%- case cat %}
+    {%- when "lotto" %}<a class="btn btn-line" href="{{ '/lotto/' | relative_url }}">🍀 로또번호 만들기로</a>
+    {%- when "saju" %}<a class="btn btn-line" href="{{ '/saju/' | relative_url }}">🔮 사주보기로</a>
+    {%- when "dream" %}<a class="btn btn-line" href="{{ '/dream/' | relative_url }}">🌙 꿈해몽 목록으로</a>
+    {%- when "buddha" %}<a class="btn btn-line" href="{{ '/buddha/' | relative_url }}">🪷 불교이야기 목록으로</a>
+  {%- endcase %}
+  <a class="btn btn-line" href="{{ '/' | relative_url }}">🏠 처음으로</a>
+</nav>

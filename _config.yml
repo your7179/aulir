@@ -1,0 +1,40 @@
+# ─────────────────────────────────────────────
+# aulir 사이트 설정 파일
+# ─────────────────────────────────────────────
+
+# ▼ 사이트 스위치 (aulir.com 연결 때 이 세 줄만 바꿉니다)
+#   시험 기간          →  aulir.com 연결 후
+#   baseurl: "/aulir"  →  baseurl: ""
+#   url: "https://shinbook.kr"  →  url: "https://aulir.com"
+#   ads: false         →  ads: true
+baseurl: "/aulir"
+url: "https://shinbook.kr"
+ads: false
+
+# ▼ 사이트 기본 정보
+title: "aulir 행운쉼터"
+tagline: "행운의 번호, 사주, 꿈해몽, 불교이야기"
+description: "행운의 로또번호 만들기, 사주보기, 꿈해몽, 불교이야기를 쉽고 편하게 보는 곳입니다."
+lang: "ko"
+author: "신광태"
+email: "naul2@naver.com"
+
+# ▼ 게시판 주소 (카페24 워드프레스+케이보드, 준비되면 실제 주소로 바꿉니다)
+board_url: "https://board.aulir.com/"
+
+# ▼ 지킬 설정 (건드리지 않아도 됩니다)
+markdown: kramdown
+timezone: Asia/Seoul
+permalink: /:categories/:title/
+
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock

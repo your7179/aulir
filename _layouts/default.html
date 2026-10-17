@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="{{ site.lang | default: 'ko' }}">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+{%- if page.url == "/" %}
+<title>{{ site.title }} | {{ site.tagline }}</title>
+{%- else %}
+<title>{{ page.title }} | {{ site.title }}</title>
+{%- endif %}
+<meta name="description" content="{{ page.description | default: site.description | strip_html | strip_newlines | escape }}">
+<link rel="canonical" href="{{ page.url | absolute_url }}">
+{%- if page.noindex %}
+<meta name="robots" content="noindex, follow">
+{%- endif %}
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="{{ site.title }}">
+<meta property="og:title" content="{{ page.title | default: site.title }}">
+<meta property="og:description" content="{{ page.description | default: site.description | strip_html | strip_newlines | escape }}">
+<meta property="og:url" content="{{ page.url | absolute_url }}">
+<meta name="theme-color" content="#287b47">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍀</text></svg>">
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+{% include adsense-head.html %}
+</head>
+<body>
+<a class="skip" href="#main">본문 바로가기</a>
+{% include header.html %}
+
+<main id="main" class="wrap">
+  {%- assign section = page.section | default: page.category %}
+
+  {%- unless page.hide_title %}
+  <header class="page-head">
+    {%- if page.icon %}<div class="page-icon" aria-hidden="true">{{ page.icon }}</div>{% endif %}
+    <h1>{{ page.title }}</h1>
+    {%- if page.intro %}
+    <p class="lead">{{ page.intro }}</p>
+    {%- endif %}
+  </header>
+  {%- endunless %}
+
+  {%- comment %} 메뉴별 상단 광고: 제목·소개 문단 아래 1개 (레이아웃이 자동으로 넣음) {% endcomment %}
+  {%- unless page.noads %}
+    {%- case section %}
+      {%- when "main" %}{% include ad-main-top.html %}
+      {%- when "lotto" %}{% include ad-lotto-top.html %}
+      {%- when "saju" %}{% include ad-saju-top.html %}
+      {%- when "dream" %}{% include ad-dream-top.html %}
+      {%- when "buddha" %}{% include ad-buddha-top.html %}
+    {%- endcase %}
+  {%- endunless %}
+
+  {{ content }}
+</main>
+
+{% include footer.html %}
+
+{%- for src in page.scripts %}
+<script src="{% if src contains '://' %}{{ src }}{% else %}{{ src | relative_url }}{% endif %}" defer></script>
+{%- endfor %}
+</body>
+</html>

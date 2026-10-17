@@ -1,0 +1,14 @@
+<footer class="site-foot">
+  <div class="site-foot-in">
+    <nav class="foot-links" aria-label="사이트 안내">
+      <a href="{{ '/about/' | relative_url }}">사이트 소개</a>
+      <a href="{{ '/privacy/' | relative_url }}">개인정보처리방침</a>
+      <a href="{{ '/contact/' | relative_url }}">문의하기</a>
+      <a href="{{ site.board_url }}">게시판</a>
+    </nav>
+    <p class="foot-note">
+      이 사이트의 로또번호는 재미로 만드는 무작위 번호이며, 사주·꿈해몽은 재미와 참고를 위한 내용입니다.
+    </p>
+    <p class="foot-copy">© {{ site.time | date: "%Y" }} {{ site.title }} · 운영 화천인사이트 {{ site.author }}</p>
+  </div>
+</footer>

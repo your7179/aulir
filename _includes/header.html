@@ -1,0 +1,16 @@
+<header class="site-head">
+  <div class="site-head-in">
+    <a class="logo" href="{{ '/' | relative_url }}">
+      <span class="logo-mark" aria-hidden="true">🍀</span>
+      <span class="logo-text">{{ site.title }}</span>
+    </a>
+    <nav class="gnb" aria-label="주 메뉴">
+      {%- assign sec = page.section | default: page.category %}
+      <a href="{{ '/lotto/' | relative_url }}"{% if sec == "lotto" %} aria-current="page"{% endif %}><span aria-hidden="true">🍀</span>로또번호</a>
+      <a href="{{ '/saju/' | relative_url }}"{% if sec == "saju" %} aria-current="page"{% endif %}><span aria-hidden="true">🔮</span>사주보기</a>
+      <a href="{{ '/dream/' | relative_url }}"{% if sec == "dream" %} aria-current="page"{% endif %}><span aria-hidden="true">🌙</span>꿈해몽</a>
+      <a href="{{ '/buddha/' | relative_url }}"{% if sec == "buddha" %} aria-current="page"{% endif %}><span aria-hidden="true">🪷</span>불교이야기</a>
+      <a class="gnb-board" href="{{ site.board_url }}"><span aria-hidden="true">💬</span>게시판</a>
+    </nav>
+  </div>
+</header>
