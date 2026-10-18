@@ -18,8 +18,16 @@
 <meta property="og:title" content="{% if page.url == "/" %}{{ site.title }} - {{ site.tagline }}{% else %}{{ page.seo_title | default: page.title }} | {{ site.title }}{% endif %}">
 <meta property="og:description" content="{{ page.description | default: site.description | strip_html | strip_newlines | escape }}">
 <meta property="og:url" content="{{ page.url | absolute_url }}">
+<meta property="og:image" content="{{ page.image | default: '/assets/img/og-image.png' | absolute_url }}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ko_KR">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#287b47">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍀</text></svg>">
+<link rel="icon" href="{{ '/favicon.ico' | relative_url }}" sizes="48x48">
+<link rel="icon" type="image/png" sizes="96x96" href="{{ '/favicon-96.png' | relative_url }}">
+<link rel="icon" type="image/png" sizes="192x192" href="{{ '/favicon-192.png' | relative_url }}">
+<link rel="apple-touch-icon" sizes="180x180" href="{{ '/apple-touch-icon.png' | relative_url }}">
 <link rel="preconnect" href="https://cdn.jsdelivr.net">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
