@@ -158,7 +158,7 @@
     "t": "호랑이 새끼는 태몽으로 많이 풀며, 재주 있는 아이를 뜻합니다."
    }
   ],
-  "post": null,
+  "post": "/dream/tiger-dream/",
   "pop": false
  },
  {
@@ -893,7 +893,7 @@
     "t": "봉황이 내게 날아와 앉는 꿈은 귀인을 만나거나 큰 경사가 생긴다는 뜻입니다."
    }
   ],
-  "post": null,
+  "post": "/dream/phoenix-dream/",
   "pop": false
  },
  {
@@ -1625,7 +1625,7 @@
     "t": "해가 떠오르는 꿈은 새로운 출발이 크게 빛난다는 뜻입니다."
    }
   ],
-  "post": null,
+  "post": "/dream/sun-dream/",
   "pop": false
  },
  {
@@ -1643,7 +1643,7 @@
   ],
   "sum": "달은 조용한 복과 소원 성취를 뜻합니다. 밝은 보름달은 바라던 일이 이루어진다는 뜻이고, 태몽으로도 봅니다.",
   "acts": [],
-  "post": null,
+  "post": "/dream/moon-dream/",
   "pop": false
  },
  {
@@ -3198,7 +3198,7 @@
   ],
   "sum": "결혼 꿈은 새로운 약속과 결합을 뜻합니다. 기쁘게 혼례를 치르면 계약이나 협력이 잘 이루어진다는 뜻입니다.",
   "acts": [],
-  "post": null,
+  "post": "/dream/wedding-dream/",
   "pop": false
  },
  {
