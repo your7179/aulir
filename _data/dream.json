@@ -1535,7 +1535,7 @@
   ],
   "sum": "비는 메마른 땅을 적시는 복을 뜻합니다. 시원하게 내리는 비는 막혔던 일이 풀린다는 뜻입니다.",
   "acts": [],
-  "post": null,
+  "post": "/dream/rain-dream/",
   "pop": false
  },
  {
@@ -1661,7 +1661,7 @@
   ],
   "sum": "별은 희망과 재능을 뜻합니다. 반짝이는 별을 받는 꿈은 이름을 알릴 기회가 온다는 뜻입니다.",
   "acts": [],
-  "post": null,
+  "post": "/dream/star-dream/",
   "pop": false
  },
  {
@@ -1673,7 +1673,7 @@
   ],
   "sum": "무지개는 기쁜 소식과 행운의 상징입니다. 힘든 일이 끝나고 좋은 때가 온다는 뜻입니다.",
   "acts": [],
-  "post": null,
+  "post": "/dream/rainbow-dream/",
   "pop": false
  },
  {
@@ -2230,7 +2230,7 @@
     "t": "손을 다치는 꿈은 일을 잠시 쉬어 가라는 뜻이니, 무리하지 말고 몸을 아끼세요."
    }
   ],
-  "post": null,
+  "post": "/dream/hand-dream/",
   "pop": false
  },
  {
@@ -3513,7 +3513,7 @@
   ],
   "sum": "절에 가는 꿈은 마음의 안식과 소원 성취를 뜻합니다. 법당에서 기도하는 꿈은 정성이 닿아 바라던 일이 이루어진다는 뜻입니다.",
   "acts": [],
-  "post": null,
+  "post": "/dream/temple-dream/",
   "pop": false
  },
  {
