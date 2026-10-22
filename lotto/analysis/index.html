@@ -1,0 +1,232 @@
+---
+layout: default
+title: "로또 1등 당첨번호 분석"
+seo_title: "로또 1등 당첨번호 통계 분석"
+description: "로또 6/45 1회부터 최근 회차까지 1등 당첨번호 통계. 번호별 출현 횟수, 홀짝·합계, 1등 당첨금, 내 번호 역대 당첨 조회."
+section: lotto
+icon: "📊"
+intro: "2002년 첫 추첨부터 지난주까지, 모든 1등 당첨번호를 모아 살펴봤습니다. 매주 일요일에 새 회차가 저절로 더해집니다."
+scripts:
+  - "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"
+  - "/assets/js/lotto-analysis.js"
+---
+{%- assign D = site.data.lotto -%}
+{%- assign LAST = D | last -%}
+{%- assign FIRST = D | first -%}
+
+<div id="lottoApp" class="la" data-src="{{ '/assets/data/lotto-data.json' | relative_url }}?v={{ LAST[0] }}">
+
+<section class="la-latest card" aria-label="가장 최근 회차">
+  <p class="la-latest-label">최근 <strong>제{{ LAST[0] }}회</strong> ({{ LAST[1] | replace: '-', '.' }}) 1등 당첨번호</p>
+  <div class="balls">
+    {%- for i in (2..8) -%}
+      {%- assign n = LAST[i] -%}
+      {%- if i == 8 %}<span class="plus">+</span>{% endif -%}
+      <span class="ball {% if n <= 10 %}b1{% elsif n <= 20 %}b2{% elsif n <= 30 %}b3{% elsif n <= 40 %}b4{% else %}b5{% endif %}">{{ n }}</span>
+    {%- endfor -%}
+  </div>
+  <div class="la-facts">
+    <div><b>{{ D | size }}회</b><span>분석한 추첨 횟수</span></div>
+    <div><b>814만분의 1</b><span>1등 확률 (1게임)</span></div>
+    <div><b id="fAvg">-</b><span>1등 평균 당첨금 (1인)</span></div>
+    <div><b id="fMax">-</b><span>역대 최고 1등 당첨금</span></div>
+  </div>
+</section>
+
+<nav class="saju-nav la-toc" aria-label="이 페이지 차례">
+  <a href="#basics">먼저 알아둘 것</a>
+  <a href="#freq">번호별 출현</a>
+  <a href="#slip">용지 그림</a>
+  <a href="#ranking">순위</a>
+  <a href="#pattern">홀짝·합계</a>
+  <a href="#prize">1등 당첨금</a>
+  <a href="#odds">등수별 확률</a>
+  <a href="#check">내 번호 조회</a>
+  <a href="#myth">오해와 진실</a>
+</nav>
+
+<article class="article">
+  <h2 id="basics">통계는 지난 일을 보여 줄 뿐입니다</h2>
+  <p>
+    로또는 45개의 공 가운데 6개를 무작위로 뽑습니다. 추첨기는 지난주에 어떤 번호가 나왔는지 기억하지 못합니다.
+    그래서 <strong>1, 2, 3, 4, 5, 6</strong>이라는 조합과 <strong>3, 17, 22, 29, 38, 41</strong>이라는 조합이 나올 가능성은 똑같이 814만 5,060분의 1입니다.
+  </p>
+  <p>
+    그런데도 통계를 보는 까닭은 세 가지입니다. 첫째, 20년 넘게 쌓인 숫자에는 재미있는 이야기가 많습니다.
+    둘째, '이 번호는 잘 안 나온다' 같은 잘못된 말을 숫자로 확인해 볼 수 있습니다.
+    셋째, 당첨 가능성은 바꿀 수 없어도 <strong>당첨됐을 때 나눠 가질 사람 수</strong>는 번호 고르는 방법에 따라 달라질 수 있습니다.
+  </p>
+  <p class="tip">
+    이 페이지는 제{{ FIRST[0] }}회({{ FIRST[1] | replace: '-', '.' }})부터 제{{ LAST[0] }}회({{ LAST[1] | replace: '-', '.' }})까지
+    {{ D | size }}회 추첨의 1등 번호 6개, 보너스 번호, 1등 1인당 당첨금, 1등 인원을 썼습니다.
+    모든 수치는 이 자료로 화면에서 바로 계산합니다.
+  </p>
+
+  <h2 id="freq">45개 번호는 얼마나 고르게 나왔을까요?</h2>
+  <div id="freqText"><p>자료를 불러오는 중입니다…</p></div>
+  <figure class="la-chart">
+    <figcaption>번호별 1등 당첨번호 출현 횟수 <small>(보너스 번호 빼고)</small></figcaption>
+    <p class="la-legend"><span><i class="k-main"></i>출현 횟수</span><span><i class="k-hi"></i>가장 많이·가장 적게</span><span><i class="k-line"></i>고르게 나왔을 때의 횟수</span></p>
+    <div class="la-canvas tall"><canvas id="cFreq" role="img" aria-label="번호별 출현 횟수 막대그래프"></canvas></div>
+  </figure>
+  <p class="notice" id="freqNote"></p>
+
+  <h2 id="slip">로또 용지 위에 칠해 본 45개 번호</h2>
+  <p>
+    실제 로또 용지처럼 한 줄에 7개씩 번호를 놓았습니다. 색이 진할수록 값이 큽니다.
+    아래 단추로 '나온 횟수'와 '안 나온 기간'을 바꿔 볼 수 있습니다.
+  </p>
+  <div class="la-slip">
+    <div class="choice-row" role="group" aria-label="용지 그림 기준">
+      <button type="button" id="mFreq" aria-pressed="true">나온 횟수</button>
+      <button type="button" id="mGap" aria-pressed="false">안 나온 기간</button>
+    </div>
+    <p class="help" id="slipCaption"></p>
+    <div class="la-grid45" id="grid45"></div>
+    <p class="la-scale"><span id="scaleMin"></span><span class="bar"></span><span id="scaleMax"></span></p>
+  </div>
+
+  <h2 id="ranking">가장 많이, 가장 적게, 가장 오래</h2>
+  <div class="la-ranks">
+    <div class="la-rank"><h3>가장 많이 나온 번호</h3><ol id="rkTop"></ol></div>
+    <div class="la-rank"><h3>가장 적게 나온 번호</h3><ol id="rkLow"></ol></div>
+    <div class="la-rank"><h3>가장 오래 안 나온 번호</h3><ol id="rkGap"></ol></div>
+    <div class="la-rank"><h3>보너스로 가장 많이 나온 번호</h3><ol id="rkBonus"></ol></div>
+    <div class="la-rank"><h3>최근 10회 동안 자주 나온 번호</h3><ol id="rkRecent"></ol></div>
+  </div>
+  <p>
+    '오래 안 나온 번호가 곧 나온다'는 말이 많지만, 안 나온 기간은 다음 추첨에 아무 영향을 주지 않습니다.
+    순위는 지난 기록을 재미로 살펴보는 것일 뿐입니다.
+  </p>
+</article>
+
+{% include ad-lotto-article.html %}
+
+<article class="article">
+  <h2 id="pattern">홀짝, 합계, 연속번호, 번호대</h2>
+  <p>
+    번호 하나하나보다 6개 번호가 이루는 '모양'을 보면 재미있는 사실이 보입니다.
+    다만 흔한 모양이 자주 나오는 까닭은, 그런 모양을 만드는 조합의 수가 원래 많기 때문입니다.
+  </p>
+  <div class="la-stats">
+    <div><b id="sCons">-</b><span>22·23처럼 이어진 번호가 들어 있던 회차</span></div>
+    <div><b id="sCarry">-</b><span>바로 앞 회차 번호가 다시 나온 회차</span></div>
+    <div><b id="sSum">-</b><span>6개 번호 합계의 평균</span></div>
+  </div>
+
+  <figure class="la-chart">
+    <figcaption>홀수·짝수 개수별 비율 <small>(6개 가운데 홀수가 몇 개였나)</small></figcaption>
+    <div class="la-canvas"><canvas id="cOdd" role="img" aria-label="홀짝 분포 막대그래프"></canvas></div>
+  </figure>
+
+  <figure class="la-chart">
+    <figcaption>번호대별 평균 개수 <small>(한 회차에 각 번호대가 평균 몇 개 나왔나)</small></figcaption>
+    <p class="la-legend"><span><i class="k-main"></i>실제</span><span><i class="k-line"></i>고르게 나왔을 때</span></p>
+    <div class="la-canvas"><canvas id="cRange" role="img" aria-label="번호대별 평균 개수 막대그래프"></canvas></div>
+    <p class="help">41~45번은 번호가 5개뿐이라 다른 번호대의 절반쯤 나오는 것이 정상입니다.</p>
+  </figure>
+
+  <figure class="la-chart">
+    <figcaption>6개 번호 합계의 분포</figcaption>
+    <div class="la-canvas tall"><canvas id="cSum" role="img" aria-label="번호 합계 분포 막대그래프"></canvas></div>
+    <p class="help" id="sumCaption"></p>
+  </figure>
+
+  <figure class="la-chart">
+    <figcaption>끝자리(일의 자리)별 출현 횟수</figcaption>
+    <div class="la-canvas"><canvas id="cTail" role="img" aria-label="끝자리별 출현 횟수 막대그래프"></canvas></div>
+    <p class="help">끝자리 1~5는 해당 번호가 5개(예: 5·15·25·35·45), 0과 6~9는 4개뿐이라 원래 덜 나옵니다.</p>
+  </figure>
+
+  <h2 id="prize">같은 1등인데 4억에서 400억까지</h2>
+  <div id="prizeText"></div>
+  <figure class="la-chart">
+    <figcaption>연도별 1등 평균 당첨금 <small>(1인 기준, 억 원 · 1등이 없던 회차는 뺌)</small></figcaption>
+    <div class="la-canvas tall"><canvas id="cPrize" role="img" aria-label="연도별 1등 평균 당첨금 선그래프"></canvas></div>
+  </figure>
+  <figure class="la-chart">
+    <figcaption>한 회차에 1등이 몇 명 나왔나</figcaption>
+    <div class="la-canvas"><canvas id="cWin" role="img" aria-label="1등 인원 분포 막대그래프"></canvas></div>
+  </figure>
+  <div class="la-table">
+    <table>
+      <thead><tr><th>기록</th><th>회차</th><th>추첨일</th><th>1인 당첨금</th><th>1등 인원</th></tr></thead>
+      <tbody id="recTable"></tbody>
+    </table>
+  </div>
+</article>
+
+{% include ad-lotto-article.html %}
+
+<article class="article">
+  <h2 id="odds">1,000원 한 게임의 진짜 확률</h2>
+  <div class="la-table">
+    <table>
+      <thead><tr><th>등수</th><th>조건</th><th>확률</th><th>당첨금</th></tr></thead>
+      <tbody>
+        <tr><td>1등</td><td>6개 모두</td><td>814만 5,060분의 1</td><td>나눠 받음</td></tr>
+        <tr><td>2등</td><td>5개 + 보너스</td><td>135만 7,510분의 1</td><td>나눠 받음</td></tr>
+        <tr><td>3등</td><td>5개</td><td>3만 5,724분의 1</td><td>나눠 받음</td></tr>
+        <tr><td>4등</td><td>4개</td><td>733분의 1</td><td>5만 원</td></tr>
+        <tr><td>5등</td><td>3개</td><td>45분의 1</td><td>5천 원</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>
+    814만분의 1이 어느 정도일까요? 매주 1게임씩 산다면, 1등 한 번을 기다리는 데 평균 <strong>약 15만 6천 년</strong>이 걸립니다.
+    매주 10게임씩 사도 1만 5천 년이 넘습니다.
+  </p>
+  <p>
+    4등과 5등은 당첨금이 정해져 있어 계산이 쉽습니다. 1,000원짜리 한 게임에서 5등으로 돌아오는 금액은 평균 약 112원, 4등은 약 68원입니다.
+    1~3등까지 모두 더해도 로또는 판매액의 절반쯤을 당첨금으로 돌려주는 구조입니다. 나머지는 복권기금으로 공익사업에 쓰입니다.
+  </p>
+  <p class="notice">
+    당첨금에는 세금이 붙고, 큰 금액일수록 세율이 높아집니다. 세율과 지급 기한은 바뀔 수 있으니 동행복권 공식 안내를 꼭 확인하세요.
+  </p>
+
+  <h2 id="check">내 번호였다면, 지금까지 몇 번 당첨됐을까요?</h2>
+  <p>
+    늘 사는 번호나 생일, 기념일 번호 6개를 넣어 보세요.
+    1회부터 최근 회차까지 매주 같은 번호로 1게임씩 샀다고 치고 결과를 계산합니다.
+  </p>
+</article>
+
+<section class="card tool la-checker" aria-labelledby="checkTitle">
+  <h2 id="checkTitle">🔎 내 번호 역대 당첨 조회</h2>
+  <div class="la-inputs" id="inputs"></div>
+  <p class="help" id="exampleNote">예시 번호가 들어 있습니다. 내 번호로 바꿔 보세요.</p>
+  <div class="la-btns">
+    <button type="button" class="btn btn-primary" id="btnCheck">역대 당첨 확인</button>
+    <button type="button" class="btn btn-line" id="btnRand">무작위 6개 넣기</button>
+  </div>
+  <p class="error" id="err" role="alert"></p>
+  <div id="checkResult" class="la-result" aria-live="polite"></div>
+</section>
+
+<article class="article">
+  <h2 id="myth">로또에 관한 흔한 말, 숫자로 확인하기</h2>
+  <div class="la-myths" id="myths"></div>
+
+  <h2>즐겁게, 부담 없이</h2>
+  <ul>
+    <li><strong>남들이 잘 안 고르는 번호는 나눠 가질 사람이 적을 수 있습니다.</strong> 당첨 가능성은 같지만, 많은 사람이 같은 조합을 고르면 1등 당첨금을 여럿이 나눕니다. <span id="tipShare"></span></li>
+    <li><strong>자동과 수동의 가능성은 같습니다.</strong> 어느 쪽이든 모든 조합의 가능성은 똑같습니다.</li>
+    <li><strong>금액을 정해 두세요.</strong> 로또는 한 번에 10만 원까지만 살 수 있습니다. 그보다 훨씬 적게, 잃어도 마음 편한 만큼만 즐기세요.</li>
+    <li><strong>당첨 확인은 꼭 하세요.</strong> 해마다 찾아가지 않은 당첨금이 많습니다. 지급 기한이 지나면 복권기금으로 넘어갑니다.</li>
+    <li><strong>'당첨번호 예측' 유료 서비스는 조심하세요.</strong> 지난 자료로 다음 번호를 맞힐 수 있다는 말은 근거가 없습니다.</li>
+  </ul>
+  <p class="tip">
+    복권 때문에 걱정이 생겼다면 혼자 고민하지 마세요. 도박문제 상담전화 <strong>국번 없이 1336</strong>에서 도움을 받을 수 있습니다.
+  </p>
+  <p class="notice">
+    이 페이지는 재미와 정보를 위한 통계 자료입니다. 어떤 분석도 당첨을 예측하거나 보장하지 않습니다.
+    정확한 당첨 정보는 동행복권 공식 홈페이지에서 확인하세요. (자료 기준: 제{{ LAST[0] }}회 추첨까지)
+  </p>
+</article>
+
+<div class="back-links">
+  <a class="btn btn-primary" href="{{ '/lotto/' | relative_url }}">🍀 로또번호 만들러 가기</a>
+  <a class="btn btn-line" href="{{ '/dream/' | relative_url }}">🌙 꿈해몽 찾기</a>
+</div>
+
+</div>

@@ -1,0 +1,5 @@
+---
+layout: null
+permalink: /assets/data/lotto-data.json
+---
+{{ site.data.lotto | jsonify }}

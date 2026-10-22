@@ -927,3 +927,143 @@ h3 { font-size: 20px; margin: 30px 0 10px; }
   padding: 0 10px;
   font-weight: 700;
 }
+
+/* ── 로또 1등번호 분석 (lotto/analysis/) ─────── */
+.la-latest { text-align: center; }
+.la-latest-label { margin: 0 0 4px; font-size: 18px; }
+.la-latest-label strong { color: var(--green-deep); }
+.la-facts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 18px;
+}
+@media (min-width: 640px) { .la-facts { grid-template-columns: repeat(4, 1fr); } }
+.la-facts div {
+  background: var(--green-mist);
+  border-radius: 12px;
+  padding: 12px 6px;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.4;
+}
+.la-facts b { font-size: 20px; color: var(--green-deep); white-space: nowrap; }
+.la-facts span { font-size: 15px; color: var(--muted); }
+
+.la-toc { margin: 8px 0 0; }
+.la h2[id] { scroll-margin-top: 16px; }
+@media (min-width: 640px) { .la h2[id] { scroll-margin-top: 90px; } }
+
+.la-chart {
+  margin: 22px 0;
+  padding: 16px 12px 10px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: #fff;
+}
+.la-chart figcaption { font-weight: 700; color: var(--green-deep); line-height: 1.5; }
+.la-chart figcaption small { font-weight: 400; color: var(--muted); font-size: 15px; }
+.la-chart .help { margin-top: 8px; }
+.la-canvas { position: relative; height: 240px; margin-top: 10px; }
+.la-canvas.tall { height: 300px; }
+.la-legend {
+  display: flex; flex-wrap: wrap; gap: 4px 16px;
+  margin: 6px 0 0 !important; font-size: 15px; color: var(--muted);
+}
+.la-legend i { display: inline-block; width: 14px; height: 14px; border-radius: 3px; margin-right: 6px; vertical-align: -2px; }
+.la-legend .k-main { background: #6fae82; }
+.la-legend .k-hi { background: #e0614a; }
+.la-legend .k-line { height: 0; border-top: 2px dashed #56655a; border-radius: 0; vertical-align: 4px; }
+
+/* 로또 용지 그림 */
+.la-slip { background: var(--green-mist); border-radius: 14px; padding: 16px 12px; margin: 16px 0 24px; }
+.la-slip .help { text-align: center; margin: 10px 0; }
+.la-grid45 {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+  max-width: 470px;
+  margin: 0 auto;
+}
+.la-cell {
+  position: relative;
+  aspect-ratio: 1 / 1.1;
+  border: 1.5px solid #e0614a;
+  border-radius: 6px;
+  background: #fff;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  line-height: 1.15;
+}
+.la-cell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #e0614a;
+  opacity: var(--o, 0);
+}
+.la-cell .n { position: relative; font-weight: 800; font-size: 17px; color: #b8432f; }
+.la-cell .v { position: relative; font-size: 13px; color: var(--muted); }
+.la-cell.hot .n, .la-cell.hot .v { color: #fff; }
+.la-scale { display: flex; justify-content: center; align-items: center; gap: 8px; margin: 12px 0 0 !important; font-size: 15px; color: var(--muted); }
+.la-scale .bar { width: 130px; height: 10px; border-radius: 3px; border: 1px solid var(--line); background: linear-gradient(90deg, #fff, #e0614a); }
+
+/* 순위 */
+.la-ranks { display: grid; grid-template-columns: 1fr; gap: 12px; margin: 16px 0 20px; }
+@media (min-width: 560px) { .la-ranks { grid-template-columns: 1fr 1fr; } }
+.la-rank { border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; }
+.la-rank h3 { margin: 0 0 8px; font-size: 18px; }
+.la .la-rank ol { list-style: none; padding: 0; margin: 0; }
+.la-rank li { display: flex; align-items: center; gap: 10px; margin: 0 0 6px; }
+.la-rank li .r { margin-left: auto; font-weight: 700; color: var(--muted); }
+.la-rank .ball, .la-hits .ball { width: 36px; height: 36px; font-size: 16px; }
+
+/* 숫자 요약 */
+.la-stats { display: grid; grid-template-columns: 1fr; gap: 10px; margin: 16px 0; }
+@media (min-width: 640px) { .la-stats { grid-template-columns: repeat(3, 1fr); } }
+.la-stats div { border-left: 5px solid var(--gold); background: #fdf6e3; border-radius: 10px; padding: 10px 14px; display: flex; flex-direction: column; line-height: 1.5; }
+.la-stats b { font-size: 26px; color: var(--green-deep); }
+.la-stats span { font-size: 16px; color: var(--muted); }
+
+/* 표: 휴대폰에서 옆으로 밀어 보기 */
+.la-table { overflow-x: auto; margin: 0 0 1.2em; }
+.la-table table { min-width: 460px; margin: 0; font-size: 16px; }
+
+/* 내 번호 조회 */
+.la-inputs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+@media (min-width: 560px) { .la-inputs { grid-template-columns: repeat(6, 1fr); } }
+.tool .la-inputs input { text-align: center; font-size: 22px; font-weight: 800; padding: 8px 4px; min-width: 0; }
+.la-btns { display: grid; grid-template-columns: 1fr; gap: 10px; margin-top: 14px; }
+@media (min-width: 560px) { .la-btns { grid-template-columns: 1fr 1fr; } }
+.tool .la-btns .btn-primary { margin-top: 0; }
+.la-checker .error { min-height: 1.2em; margin: 10px 0 0; }
+.la-result .balls { margin: 6px 0 12px; }
+.la-res-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; margin-bottom: 12px; }
+.la-res-grid div { background: var(--green-mist); border-radius: 10px; padding: 8px 2px; text-align: center; display: flex; flex-direction: column; line-height: 1.4; }
+.la-res-grid b { font-size: 24px; color: var(--green-deep); }
+.la-res-grid span { font-size: 15px; color: var(--muted); }
+.la-result h3 { margin: 18px 0 8px; font-size: 19px; }
+.la-hits { list-style: none; padding: 0; margin: 0; }
+.la-hits li { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; padding: 8px 0; border-top: 1px dashed var(--line); font-size: 16px; }
+.la-hits .balls { margin: 0; gap: 4px; justify-content: flex-start; }
+.la-hits .ball.miss { opacity: 0.3; }
+
+/* 오해와 진실 */
+.la-myth { border-top: 1px solid var(--line); padding: 14px 0 4px; }
+.la-myth h3 { margin: 0 0 6px; font-size: 19px; }
+.la-verdict { display: inline-block; background: #fbe6e1; color: #a83a26; border-radius: 6px; padding: 0 8px; font-weight: 700; font-size: 15px; margin-right: 4px; }
+
+/* 로또 페이지 → 분석 페이지 안내 */
+.analysis-banner { background: var(--green-mist); border: 2px solid #cfe3d3; color: var(--ink); }
+.analysis-banner strong { color: var(--green-deep); }
+.analysis-banner:hover { border-color: var(--green); color: var(--ink); }
+.more-line { margin: 14px 0 0; font-weight: 700; }
+
+@media (max-width: 380px) {
+  .la-cell .n { font-size: 15px; }
+  .la-cell .v { font-size: 11px; }
+  .la-facts b { font-size: 18px; }
+}
