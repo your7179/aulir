@@ -32,6 +32,20 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
 <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ '/feed.xml' | absolute_url }}">
+{%- if page.url == "/" %}
+{%- comment %} 네이버 연관 채널: 첫 화면에서만. 채널을 늘리려면 sameAs 목록에 주소를 쉼표로 이어 적습니다. {% endcomment %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "{{ site.title }}",
+  "url": "{{ site.url }}",
+  "sameAs": [
+    "https://blog.naver.com/naul2"
+  ]
+}
+</script>
+{%- endif %}
 {% include adsense-head.html %}
 </head>
 <body>
