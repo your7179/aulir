@@ -1114,7 +1114,7 @@
     "t": "부처님께 절하거나 말씀을 듣는 꿈은 소원이 이루어질 기운이 있다는 뜻입니다."
    }
   ],
-  "post": null,
+  "post": "/dream/monk-dream/",
   "pop": false
  },
  {
@@ -1242,7 +1242,7 @@
     "t": "자녀를 안거나 업는 꿈은 맡은 일을 책임 있게 해낸다는 뜻입니다."
    }
   ],
-  "post": null,
+  "post": "/dream/child-dream/",
   "pop": false
  },
  {
@@ -1283,7 +1283,7 @@
     "t": "형제에게 도움을 받는 꿈은 실제로도 든든한 도움이 생긴다는 뜻입니다."
    }
   ],
-  "post": null,
+  "post": "/dream/sibling-dream/",
   "pop": false
  },
  {
@@ -3527,7 +3527,7 @@
   ],
   "sum": "학교 꿈은 배움과 지난 시절을 돌아보는 마음을 뜻합니다. 새로 배울 일이 생기거나, 어른의 가르침이 필요하다는 뜻입니다.",
   "acts": [],
-  "post": null,
+  "post": "/dream/school-dream/",
   "pop": false
  },
  {
@@ -3542,7 +3542,7 @@
   ],
   "sum": "병원 꿈은 몸과 마음을 돌보라는 신호입니다. 치료를 받고 나오는 꿈은 걱정이 풀린다는 뜻입니다.",
   "acts": [],
-  "post": null,
+  "post": "/dream/hospital-dream/",
   "pop": false
  },
  {
