@@ -2,11 +2,12 @@
 layout: default
 title: "꿈해몽"
 seo_title: "꿈해몽 풀이, 꿈 내용으로 찾는 무료 해몽"
-description: "꾼 꿈을 적으면 뜻을 풀어 주는 무료 꿈해몽. 돼지꿈, 뱀꿈, 이빨 빠지는 꿈 등 80여 가지를 주제별로 찾아보세요."
+description: "꾼 꿈을 적으면 뜻을 풀어 주는 무료 꿈해몽. 돼지꿈, 뱀꿈, 이빨 빠지는 꿈 등 180여 가지를 주제별로 찾아보세요."
 section: dream
 icon: "🌙"
 intro: "간밤에 꾼 꿈을 적어 보세요. 꿈속에 나온 낱말을 찾아 뜻을 풀이해 드립니다. 재미와 참고를 위한 내용입니다."
-feed_every: 6
+show_first: 6
+ad_after: 3
 cats:
   - { id: "animal", name: "동물 꿈", icon: "🐷" }
   - { id: "person", name: "사람 꿈", icon: "👵" }
@@ -60,14 +61,17 @@ scripts:
   {%- endfor %}
 </nav>
 
-{%- assign n = 0 %}
-{%- assign total = site.data.dream | size %}
+{%- assign first_hidden = page.show_first | plus: 1 %}
 {%- for c in page.cats %}
 <section class="dream-cat" id="cat-{{ c.id }}">
   <h2>{{ c.icon }} {{ c.name }}</h2>
   {%- assign items = site.data.dream | where: "cat", c.id %}
+  {%- assign rest = items.size | minus: page.show_first %}
   {%- for e in items %}
-  {%- assign n = n | plus: 1 %}
+  {%- if forloop.index == first_hidden %}
+  <details class="dream-more">
+    <summary>{{ c.name }} {{ rest }}가지 더 보기</summary>
+  {%- endif %}
   <article class="dream-item" id="d-{{ e.id }}">
     <h3>{{ e.word }} 꿈</h3>
     <p>{{ e.sum }}</p>
@@ -82,11 +86,13 @@ scripts:
     <p><a class="more-link" href="{{ e.post | relative_url }}">📖 {{ e.word }} 꿈 자세히 보기</a></p>
     {%- endif %}
   </article>
-  {%- assign r = n | modulo: page.feed_every %}
-  {%- if r == 0 and n < total %}
+  {%- if forloop.index == page.ad_after and items.size > page.show_first %}
   {% include ad-dream-feed.html %}
   {%- endif %}
   {%- endfor %}
+  {%- if rest > 0 %}
+  </details>
+  {%- endif %}
 </section>
 {%- endfor %}
 
@@ -95,10 +101,21 @@ scripts:
 <section class="card">
   <h2>📖 꿈해몽 자세히 읽기</h2>
   <ul class="post-list">
-    {%- for p in dream_posts %}
+    {%- for p in dream_posts limit: 10 %}
     <li><a href="{{ p.url | relative_url }}">{{ p.title }}</a></li>
     {%- endfor %}
   </ul>
+  {%- if dream_posts.size > 10 %}
+  {%- assign more_posts = dream_posts.size | minus: 10 %}
+  <details class="dream-more">
+    <summary>해몽 글 {{ more_posts }}편 더 보기</summary>
+    <ul class="post-list">
+      {%- for p in dream_posts offset: 10 %}
+      <li><a href="{{ p.url | relative_url }}">{{ p.title }}</a></li>
+      {%- endfor %}
+    </ul>
+  </details>
+  {%- endif %}
 </section>
 {%- endif %}
 
