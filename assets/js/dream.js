@@ -137,6 +137,25 @@
     render(document.getElementById("dreamText").value);
   });
 
+  // 접혀 있는 '더 보기' 안의 꿈 항목으로 갈 때 먼저 펼쳐 줍니다
+  function openTarget(hash) {
+    if (!hash || hash.indexOf("#d-") !== 0) return;
+    const t = document.getElementById(hash.slice(1));
+    if (!t) return;
+    const d = t.closest("details");
+    if (d && !d.open) d.open = true;
+    t.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+  box.addEventListener("click", (ev) => {
+    const a = ev.target.closest("a[href^='#d-']");
+    if (!a) return;
+    ev.preventDefault();
+    history.replaceState(null, "", a.getAttribute("href"));
+    openTarget(a.getAttribute("href"));
+  });
+  window.addEventListener("hashchange", () => openTarget(location.hash));
+  if (location.hash) openTarget(location.hash);
+
   document.querySelectorAll("[data-dream]").forEach((b) => {
     b.addEventListener("click", () => {
       const e = byId[b.dataset.dream];
