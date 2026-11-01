@@ -855,6 +855,29 @@ h3 { font-size: 20px; margin: 30px 0 10px; }
 .dream-item li { margin-bottom: 4px; }
 .dream-item:target { box-shadow: 0 0 0 3px var(--gold); }
 
+/* 주제별 '더 보기' 접기 */
+.dream-more { margin: 12px 0 0; }
+.dream-more > summary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 52px;
+  margin: 16px 0 8px;
+  background: #fff;
+  border: 2px solid var(--green-deep);
+  border-radius: 12px;
+  color: var(--green-deep);
+  font-size: 17px;
+  font-weight: 700;
+  cursor: pointer;
+  list-style: none;
+}
+.dream-more > summary::-webkit-details-marker { display: none; }
+.dream-more > summary::after { content: " ▼"; margin-left: 6px; font-size: 14px; }
+.dream-more[open] > summary::after { content: " ▲"; }
+.dream-more[open] > summary { margin-bottom: 4px; }
+.card .dream-more > summary { margin-top: 14px; }
+
 .post-list { padding-left: 1.2em; margin: 0; }
 .post-list li { margin-bottom: 8px; }
 
