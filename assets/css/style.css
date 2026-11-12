@@ -1092,3 +1092,21 @@ h3 { font-size: 20px; margin: 30px 0 10px; }
   .la-cell .v { font-size: 11px; }
   .la-facts b { font-size: 18px; }
 }
+
+/* ── 꿈해몽 글 목록: 주제 단추 + 카드 + 쪽 번호 (2026-11-12) ── */
+.dream-posts { margin-top: 36px; scroll-margin-top: 86px; }
+.dream-posts > h2 { margin-bottom: 6px; }
+.dream-posts .help { margin: 0 0 14px; }
+@media (min-width: 560px) { .grid-filter { grid-template-columns: repeat(4, 1fr); } }
+.grid-filter button { font-size: 17px; }
+.pager-gap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  min-height: 48px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #8a8778;
+}
+.dream-dict-link { margin-top: 30px; text-align: center; }
