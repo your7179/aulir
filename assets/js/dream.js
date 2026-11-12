@@ -44,11 +44,34 @@
     return;
   }
 
+  /* ── 꿈 낱말 사전(/dream/words/): 접혀 있는 '더 보기' 안의 항목으로 갈 때 먼저 펼쳐 줍니다 ── */
+  function openTarget(hash) {
+    if (!hash || hash.indexOf("#d-") !== 0) return;
+    const t = document.getElementById(hash.slice(1));
+    if (!t) return;
+    const d = t.closest("details");
+    if (d && !d.open) d.open = true;
+    t.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
   /* ── 화면 ── */
   const form = document.getElementById("dreamForm");
   const box = document.getElementById("dreamResult");
   const dataEl = document.getElementById("dreamData");
-  if (!form || !box || !dataEl) return;
+
+  if (!form) {
+    // 사전 페이지: 주소에 #d-낱말 이 있으면 그 항목을 펼쳐 보여 줌
+    window.addEventListener("hashchange", () => openTarget(location.hash));
+    if (location.hash) openTarget(location.hash);
+    return;
+  }
+
+  // 예전 주소(/dream/#d-pig, /dream/#cat-animal)로 들어오면 낱말 사전으로 보냅니다
+  if (/^#(d|cat)-/.test(location.hash) && !document.getElementById(location.hash.slice(1))) {
+    location.replace((form.dataset.base || "") + "/dream/words/" + location.hash);
+    return;
+  }
+  if (!box || !dataEl) return;
 
   let DATA = [];
   try { DATA = JSON.parse(dataEl.textContent); } catch (e) { DATA = []; }
@@ -78,7 +101,7 @@
 
     if (!hits.length) {
       card.appendChild(el("p", null,
-        "아직 이 꿈에 맞는 풀이를 찾지 못했습니다. 꿈에 나온 동물·사람·물건·장소를 한 낱말로 적어 보시거나, 아래 '주제별 꿈해몽'에서 찾아보세요."));
+        "아직 이 꿈에 맞는 풀이를 찾지 못했습니다. 꿈에 나온 동물·사람·물건·장소를 한 낱말로 적어 보시거나, '꿈 낱말 사전'에서 주제별로 찾아보세요."));
       const tips = el("div", "chip-row dream-chips");
       DATA.filter((e) => e.pop).slice(0, 6).forEach((e) => tips.appendChild(chip(e)));
       card.appendChild(tips);
@@ -99,8 +122,8 @@
           a.href = base + h.e.post;
           links.appendChild(a);
         }
-        const more = el("a", "more-link", "목록에서 보기");
-        more.href = "#d-" + h.e.id;
+        const more = el("a", "more-link", "낱말 사전에서 보기");
+        more.href = base + "/dream/words/#d-" + h.e.id;
         links.appendChild(more);
         item.appendChild(links);
         card.appendChild(item);
@@ -136,25 +159,6 @@
     ev.preventDefault();
     render(document.getElementById("dreamText").value);
   });
-
-  // 접혀 있는 '더 보기' 안의 꿈 항목으로 갈 때 먼저 펼쳐 줍니다
-  function openTarget(hash) {
-    if (!hash || hash.indexOf("#d-") !== 0) return;
-    const t = document.getElementById(hash.slice(1));
-    if (!t) return;
-    const d = t.closest("details");
-    if (d && !d.open) d.open = true;
-    t.scrollIntoView({ behavior: "smooth", block: "start" });
-  }
-  box.addEventListener("click", (ev) => {
-    const a = ev.target.closest("a[href^='#d-']");
-    if (!a) return;
-    ev.preventDefault();
-    history.replaceState(null, "", a.getAttribute("href"));
-    openTarget(a.getAttribute("href"));
-  });
-  window.addEventListener("hashchange", () => openTarget(location.hash));
-  if (location.hash) openTarget(location.hash);
 
   document.querySelectorAll("[data-dream]").forEach((b) => {
     b.addEventListener("click", () => {
